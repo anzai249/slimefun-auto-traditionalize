@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      # - uses: actions/checkout@v4
 
       - name: Setup Java (Zulu, Maven cache)
         uses: actions/setup-java@v4
@@ -19,7 +19,8 @@ jobs:
           java-version: 23
           java-package: jdk
           architecture: x64
-          cache: maven
+          # cache: maven
+          
       - name: Checkout
         uses: actions/checkout@v3
 
