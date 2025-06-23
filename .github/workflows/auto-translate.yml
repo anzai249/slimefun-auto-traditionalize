@@ -55,4 +55,4 @@ jobs:
       - name: Build Java project
         run: |
           cd ./Slimefun4/
-          mvn -s .mvn/settings.xml -B package --errors
+          mvn -B package --errors
