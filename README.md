@@ -8,6 +8,7 @@
 2. 按上方「Actions」
 3. 點選左邊「Sync, Convert, and Build」的Action
 4. 執行
+5. 下載 Artifact 中的檔案
 
 Fork之後可以自己編輯Workflow File用來Compile其他擴展。
 
