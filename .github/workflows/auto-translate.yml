@@ -1,0 +1,44 @@
+name: Sync, Convert, and Build
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  sync-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Pull from upstream
+        run: |
+          git remote add upstream https://github.com/SlimefunGuguProject/Slimefun4.git
+          git fetch upstream
+          git merge upstream/master --allow-unrelated-histories -m "Sync upstream"
+          git push origin master
+
+      - name: Install OpenCC
+        run: sudo apt-get update && sudo apt-get install -y opencc
+
+      - name: Convert Java & YAML to Traditional
+        run: |
+          find . -type f \( -name "*.java" -o -name "*.yml" \) \
+            -exec sh -c 'opencc -i "$0" -o "$0.tmp" -c s2twp.json && mv "$0.tmp" "$0"' {} \;
+
+      - name: Replace zh-CN with zh-TW in config.yml
+        run: |
+          if [ -f config.yml ]; then
+            sed -i 's/zh-CN/zh-TW/g' config.yml
+          fi
+          find . -name config.yml -exec sed -i 's/zh-CN/zh-TW/g' {} \;
+
+      - name: Build Java project
+        run: mvn -s .mvn/settings.xml -B package --errors
