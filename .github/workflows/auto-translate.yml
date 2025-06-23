@@ -43,4 +43,6 @@ jobs:
           find . -name config.yml -exec sed -i 's/zh-CN/zh-TW/g' {} \;
 
       - name: Build Java project
-        run: mvn -s .mvn/settings.xml -B package --errors
+        run: |
+          cd ./Slimefun4/
+          mvn -s .mvn/settings.xml -B package --errors
