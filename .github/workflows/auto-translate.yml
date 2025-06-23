@@ -10,6 +10,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Java (Zulu, Maven cache)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: ${{ vars.JAVA_CI_VERSION }}
+          java-package: jdk
+          architecture: x64
+          cache: maven
       - name: Checkout
         uses: actions/checkout@v3
 
