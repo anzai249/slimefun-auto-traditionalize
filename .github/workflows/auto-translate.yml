@@ -22,8 +22,8 @@ jobs:
         run: |
           git remote add upstream https://github.com/SlimefunGuguProject/Slimefun4.git
           git fetch upstream
-          # git merge upstream/main --allow-unrelated-histories -m "Sync upstream"
-          # git push origin main
+          git merge upstream/main --allow-unrelated-histories -m "Sync upstream"
+          git push origin main
 
       - name: Install OpenCC
         run: sudo apt-get update && sudo apt-get install -y opencc
