@@ -41,10 +41,12 @@ jobs:
       - name: Install OpenCC
         run: sudo apt-get update && sudo apt-get install -y opencc
 
-      - name: Convert Java & YAML to Traditional
+      - name: Convert .java & .yml to Traditional Chinese (Taiwan)
         run: |
-          find . -type f \( -name "*.java" -o -name "*.yml" \) \
-            -exec sh -c 'opencc -i "$0" -o "$0.tmp" -c s2twp.json && mv "$0.tmp" "$0"' {} \;
+          find . -path ./Slimefun4/src/main/resources/languages -prune -o -type f \( -name "*.java" -o -name "*.yml" \) -print \
+            | while read file; do
+                opencc -i "$file" -o "$file.tmp" -c s2twp.json && mv "$file.tmp" "$file"
+              done
 
       - name: Replace zh-CN with zh-TW in config.yml
         run: |
